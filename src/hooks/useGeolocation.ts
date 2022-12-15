@@ -67,7 +67,10 @@ export function useWatchPosition(): WatchPositionHooks {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
   const [permissionStatusError, setPermissionStatusError] = useState();
 
-  const requestPermission = requestPermissionBuilder(setPermissionStatus, setPermissionStatusError);
+  const requestPermission = requestPermissionBuilder(
+    setPermissionStatus,
+    setPermissionStatusError
+  );
   const startWatch = (options: PositionOptions = {}) => {
     Geolocation.watchPosition(options, (pos: Position | null, error?: any) => {
       if (error) setError(error);
@@ -90,7 +93,10 @@ export function useWatchPosition(): WatchPositionHooks {
   };
 }
 
-function requestPermissionBuilder(setStatus: (status: PermissionStatus) => void, setError: (error: any) => void): () => void {
+function requestPermissionBuilder(
+  setStatus: (status: PermissionStatus) => void,
+  setError: (error: any) => void
+): () => void {
   return () => {
     Geolocation.requestPermissions().then(
       (status: PermissionStatus) => setStatus(status),

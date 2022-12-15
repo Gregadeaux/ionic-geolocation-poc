@@ -28,11 +28,11 @@ export const PositionContainer: React.FC<PositionComponentProps> = ({ className,
   }, [permissionStatus]);
 
   return (
-    <div style={style} className={className}>
-      <PositionComponent 
-        position={position} 
-        positionError={positionError}
-        permissionStatus={permissionStatus} />
-    </div>
+    <PositionComponent
+      style={style}
+      className={className}
+      position={position} 
+      positionError={positionError}
+      permissionStatus={permissionStatus} />
   );
 };
