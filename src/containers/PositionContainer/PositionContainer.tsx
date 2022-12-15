@@ -13,6 +13,7 @@ interface PositionComponentProps {
 
 export const PositionContainer: React.FC<PositionComponentProps> = ({ className, style }) => {
   const { position, permissionStatus, positionError, requestPermission, requestUpdate } = usePosition();
+//   const { position, permissionStatus, positionError, requestPermission, startWatch } = useWatchPosition();
 
   useEffect(() => {
     switch (permissionStatus) {
@@ -21,6 +22,7 @@ export const PositionContainer: React.FC<PositionComponentProps> = ({ className,
         break;
       case PermissionStatusEnum.Granted:
         requestUpdate();
+        // startWatch();
         break;
     }
   }, [permissionStatus]);

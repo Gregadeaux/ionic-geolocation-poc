@@ -103,7 +103,6 @@ function parsePermissionError(
   permissionStatusError?: string,
   permissionStatus?: PermissionStatus
 ): PermissionStatusEnum {
-  console.log('Status', permissionStatus, 'Error', permissionStatusError);
   if (!permissionStatusError) {
     if (permissionStatus === undefined) {
       return PermissionStatusEnum.Unknown;
