@@ -1,45 +1,36 @@
-import React, { useEffect } from 'react';
-import {
-  useWatchPosition,
-  PermissionStatusEnum,
-} from '../../hooks/useGeolocation';
+import React from 'react';
+import { Position } from '@capacitor/geolocation';
+import { PermissionStatusEnum } from '../../hooks/useGeolocation';
 
 interface PositionComponentProps {
+  position: Position | null | undefined,
+  permissionStatus: PermissionStatusEnum,
+  positionError?: string
   className?: string;
   style?: React.CSSProperties;
 }
 
-export const PositionComponent: React.FC<PositionComponentProps> = ({
-  className,
-  style,
-}) => {
-  const { position, permissionStatus, requestPermission, startWatch } =
-    useWatchPosition();
-
-  useEffect(() => {
-    switch (permissionStatus) {
-      case PermissionStatusEnum.Unknown:
-        requestPermission();
-        break;
-      case PermissionStatusEnum.Granted:
-        startWatch();
-        break;
-    }
-  }, [permissionStatus]);
-
+export const PositionComponent: React.FC<PositionComponentProps> = ({ position, positionError, permissionStatus, className, style }) => {
   let positionView = <></>;
 
-  if (position) {
+  if (positionError) {
+    positionView = (
+      <>
+        There was an error locating your position...
+      </>
+    )
+  } else if (position) {
     positionView = (
       <>
         {position.coords.latitude}, {position.coords.longitude}
       </>
     );
-  } else if (
-    permissionStatus === PermissionStatusEnum.Unknown ||
-    (permissionStatus === PermissionStatusEnum.Granted && !position)
-  ) {
-    positionView = <>Locating you...</>;
+  } else if (permissionStatus === PermissionStatusEnum.Unknown || (permissionStatus === PermissionStatusEnum.Granted && !position)) {
+    positionView = (
+      <>
+        Locating you...
+      </>
+    );
   } else if (permissionStatus === PermissionStatusEnum.Denied) {
     positionView = (
       <>
@@ -48,7 +39,11 @@ export const PositionComponent: React.FC<PositionComponentProps> = ({
       </>
     );
   } else if (permissionStatus === PermissionStatusEnum.NotEnabled) {
-    positionView = <>Please enable location services</>;
+    positionView = (
+      <>
+        Please enable location services
+      </>
+    );
   }
 
   return (

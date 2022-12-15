@@ -5,7 +5,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { PositionComponent } from '../components/PositionComponent/PositionComponent';
+import { PositionContainer } from '../containers/PositionContainer/PositionContainer';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <PositionComponent className="container" />
+        <PositionContainer className="container" />
       </IonContent>
     </IonPage>
   );
